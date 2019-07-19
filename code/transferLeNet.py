@@ -193,7 +193,7 @@ def evaluate_transfer_lenet5(learning_rate=0.1, alpha = 1, n_epochs=20,
     marginal_params = layer1.params + layer0.params
     
     # calculate marginal MMD and its gradients
-    marginal_MMD = T.mean(T.mean(layer2_input[T.arange(batch_size/2)]) - T.mean(layer2_input[T.arange(batch_size/2,batch_size,1)]))
+    marginal_MMD = T.mean(layer2_input[T.arange(batch_size/2)],axis = 0) - T.mean(layer2_input[T.arange(batch_size/2,batch_size,1)], axis = 0)
     marginal_grads = T.grad(T.dot(marginal_MMD,marginal_MMD), marginal_params)
     
     # the cost we minimize during training is the NLL of the model
